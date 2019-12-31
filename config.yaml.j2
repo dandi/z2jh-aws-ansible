@@ -1,5 +1,17 @@
 proxy:
   secretToken: "{{ os.stdout }}"
+  https:
+    enabled: true
+    type: offload
+  service:
+    annotations:
+      # Certificate ARN
+      service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "{{ aws_certificate_arn }}"
+      # The protocol to use on the backend, we use TCP since we're using websockets
+      service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "tcp"
+      # Which ports should use SSL
+      service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
+      service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "3600"
 singleuser:
   defaultUrl: "/lab"
   image:

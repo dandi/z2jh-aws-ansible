@@ -15,10 +15,22 @@
           block: |
             auth:
               type: github
+              admin:
+                access: true
+                users:
+                  - "satra"
+                  - "yarikoptic"
               github:
                 clientId: "{{ github_client_id }}"
                 clientSecret: "{{ github_client_secret }}"
                 callbackUrl: "{{ ingress }}/hub/oauth_callback"
+                org_whitelist:
+                  - "dandi"
+                  - "nipype"
+                  - "repronim"
+              scopes:
+                - "read:org"
+                - "read:user"
             hub:
               extraConfig:
                 autogenConfig: |
